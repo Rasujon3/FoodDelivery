@@ -16,10 +16,10 @@ public class SplashScreen extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreen.this,LoginActivity.class));
+                startActivity(new Intent(SplashScreen.this, LoginActivity.class));
                 finish();
             }
-        },3000);
-        Toast.makeText(this,"Welcome to Pizza Hut",Toast.LENGTH_LONG).show();
+        }, 3000);
+        Toast.makeText(this, "Welcome to Pizza Hut", Toast.LENGTH_LONG).show();
     }
 }
