@@ -4,4 +4,5 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="sign_in_with_google">Sign In With Google</string>
+    <string name="default_notification_channel_id">channel1</string>
 </resources>
