@@ -14,8 +14,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.google.firebase.firestore.*;
 import com.sujon.fooddelivery.model.DataController;
+import com.sujon.fooddelivery.model.MenuItem;
 import com.sujon.fooddelivery.model.Restaurant;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements RestaurantInterface {
     private static final String TAG = "MainActivity";
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantInterfa
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        //SendDataToFirestore();
+        SendDataToFirestore();
 
 
        // GetDataFromFirestore();
@@ -59,6 +63,13 @@ public class MainActivity extends AppCompatActivity implements RestaurantInterfa
         myRestaurant.setRestaurantLocation("Bonarpara, Gaibandha");
         myRestaurant.setRestaurantImageUrl("https://img.freepik.com/free-photo/assorted-indian-recipes-food-various_79295-7226.jpg?size=626&ext=jpg");
 
+        List<MenuItem> myMenus = new ArrayList<>();
+        for (int i =0; i<15;i++){
+            myMenus.add(new MenuItem("Mutton Kacchi","Best one",450));
+
+        }
+        myRestaurant.setRestaurantMenuList(myMenus);
+
         reference.add(myRestaurant).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
@@ -74,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantInterfa
 
     @Override
     public void onRestaurantClick(Restaurant restaurant) {
+        controller.setCurrentMenuItemList(restaurant.getRestaurantMenuList());
         navController.navigate(R.id.action_navigation_home_to_navigation_menu);
 
     }
