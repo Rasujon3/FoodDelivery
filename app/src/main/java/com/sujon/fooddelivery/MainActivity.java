@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantInterfa
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        SendDataToFirestore();
+       // SendDataToFirestore();
 
 
        // GetDataFromFirestore();

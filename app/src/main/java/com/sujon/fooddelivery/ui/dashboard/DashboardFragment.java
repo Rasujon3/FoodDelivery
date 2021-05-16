@@ -4,30 +4,39 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 import com.sujon.fooddelivery.R;
 
 public class DashboardFragment extends Fragment {
-
-    private DashboardViewModel dashboardViewModel;
+    FirebaseUser user;
+    ImageView userProfile;
+    TextView emailText,nameText;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
+        userProfile=root.findViewById(R.id.imageView);
+        emailText=root.findViewById(R.id.textView2);
+        nameText=root.findViewById(R.id.textView);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user!=null){
+            emailText.setText("Email : "+user.getEmail());
+            nameText.setText("Name : "+user.getDisplayName());
+            Picasso.get().load(user.getPhotoUrl()).fit().into(userProfile);
+        }
+
         return root;
     }
 }
