@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import com.sujon.fooddelivery.R;
+import com.sujon.fooddelivery.model.DataController;
 import com.sujon.fooddelivery.model.Restaurant;
 import org.jetbrains.annotations.NotNull;
 
@@ -59,6 +60,14 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             restaurantImage=itemView.findViewById(R.id.restaurantImageView);
             restaurantName=itemView.findViewById(R.id.restaurantNameTextView);
             restaurantDescription=itemView.findViewById(R.id.restaurantDescriptionTextView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Restaurant current=allRestaurants.get(getAdapterPosition());
+                    DataController.instance.getRestaurantInterface().onRestaurantClick(current);
+
+                }
+            });
         }
     }
 }
