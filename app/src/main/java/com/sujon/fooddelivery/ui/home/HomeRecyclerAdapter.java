@@ -36,7 +36,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         Restaurant current = allRestaurants.get(position);
         holder.restaurantName.setText(current.getRestaurantName());
         holder.restaurantDescription.setText(current.getRestaurantDescription());
-        Picasso.get().load(current.getRestaurantImageUrl()).into(holder.restaurantImage);
+        Picasso.get().load(current.getRestaurantImageUrl()).fit().into(holder.restaurantImage);
 
     }
 

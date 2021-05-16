@@ -36,25 +36,11 @@ public class MainActivity extends AppCompatActivity {
         //SendDataToFirestore();
 
 
-        GetDataFromFirestore();
+       // GetDataFromFirestore();
 
     }
 
-    private void GetDataFromFirestore() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Restaurants")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (DocumentSnapshot documentSnapshot : task.getResult()) {
-                        Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
-                        Log.e(TAG, "onComplete: " + restaurant.getRestaurantName());
-                    }
-                }
-            }
-        });
-    }
+
 
     private void SendDataToFirestore() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
