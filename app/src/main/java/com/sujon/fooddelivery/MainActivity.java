@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        //SendDataToFirestroe();
+        //SendDataToFirestore();
 
 
         GetDataFromFirestore();
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void SendDataToFirestroe() {
+    private void SendDataToFirestore() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference reference = db.collection("Restaurants");
         Restaurant myRestaurant = new Restaurant();
