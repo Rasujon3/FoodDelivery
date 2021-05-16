@@ -1,6 +1,7 @@
 package com.sujon.fooddelivery;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -11,13 +12,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.*;
 import com.sujon.fooddelivery.model.Restaurant;
 import org.jetbrains.annotations.NotNull;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +35,29 @@ public class MainActivity extends AppCompatActivity {
 
         //SendDataToFirestroe();
 
+
+        GetDataFromFirestore();
+
+    }
+
+    private void GetDataFromFirestore() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Restaurants")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                        Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
+                        Log.e(TAG, "onComplete: " + restaurant.getRestaurantName());
+                    }
+                }
+            }
+        });
     }
 
     private void SendDataToFirestroe() {
-        FirebaseFirestore db= FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference reference = db.collection("Restaurants");
         Restaurant myRestaurant = new Restaurant();
         myRestaurant.setRestaurantName("Sujon Restaurants");
@@ -49,11 +68,11 @@ public class MainActivity extends AppCompatActivity {
         reference.add(myRestaurant).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(MainActivity.this,"Restaurant Uploaded Successfully",Toast.LENGTH_SHORT).show();
+                if (task.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, "Restaurant Uploaded Successfully", Toast.LENGTH_SHORT).show();
 
-                }else {
-                    Toast.makeText(MainActivity.this,"Restaurant not Uploaded",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Restaurant not Uploaded", Toast.LENGTH_SHORT).show();
                 }
             }
         });
